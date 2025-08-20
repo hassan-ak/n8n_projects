@@ -1,0 +1,73 @@
+{
+  "name": "05_hacker_news_automation_fetcher",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f813f866-56c6-44a9-b33a-c3fb35e389d8",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "all",
+        "limit": 10,
+        "additionalFields": {
+          "keyword": "automation"
+        }
+      },
+      "type": "n8n-nodes-base.hackerNews",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f8320e43-9111-4d2e-9de3-641e8541908d",
+      "name": "Hacker News",
+      "notesInFlow": true,
+      "notes": "Get the 10 latest articles."
+    },
+    {
+      "parameters": {
+        "content": "## Hacker News Automation Fetcher\n\nFetches the 10 latest Hacker News articles containing “automation” when executed.",
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -352,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "a28a8949-8cd1-43fb-aa29-0c394ed4b734",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Hacker News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "acf59ed6-b81a-4bec-8523-89fa4bee9c49",
+  "meta": {
+    "instanceId": "fd5a68f0c752ba0d64fcc13e181b705560ebcd91b307ae97c92329997aaef117"
+  },
+  "id": "kN1YhihHR0zZpzhd",
+  "tags": []
+}
