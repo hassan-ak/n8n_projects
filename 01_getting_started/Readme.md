@@ -21,7 +21,6 @@ Demonstrate how to:
 | AI Agent                   | `@n8n/n8n-nodes-langchain.agent`              | Orchestrates calls to the LLM and integrates memory.                            |
 | Google Gemini Chat Model   | `@n8n/n8n-nodes-langchain.lmChatGoogleGemini` | The underlying Large Language Model (Gemini / PaLM).                            |
 | Simple Memory              | `@n8n/n8n-nodes-langchain.memoryBufferWindow` | Maintains a recent message window for conversational continuity.                |
-| Sticky Note                | `n8n-nodes-base.stickyNote`                   | In-editor annotation (no runtime effect).                                       |
 
 ### Data Flow
 

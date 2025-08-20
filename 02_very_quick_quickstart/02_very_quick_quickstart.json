@@ -1,0 +1,171 @@
+{
+  "name": "02_very_quick_quickstart",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAllPeople",
+        "returnAll": true
+      },
+      "id": "cbb6afcc-f900-434d-ad2e-affb31ccf7a9",
+      "name": "Customer Datastore",
+      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
+      "position": [
+        912,
+        528
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Very quick QuickStart",
+        "height": 80,
+        "width": 300
+      },
+      "id": "1eb939c0-e391-4e3b-9751-889da2de7cf7",
+      "name": "Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        448,
+        320
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "**Get fake sample data**",
+        "height": 300,
+        "width": 220
+      },
+      "id": "c53a8591-9efe-4fb8-993b-6cc309f3240e",
+      "name": "Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "**Extract data and prepare it for use in the next node**",
+        "height": 300,
+        "width": 220
+      },
+      "id": "c7e35ca4-b180-4280-9e43-a5dda5d3ea97",
+      "name": "Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1136,
+        432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "94bba884-5cef-4fe6-ba7d-cc7dbe49839c",
+      "name": "When clicking \"Test Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        672,
+        528
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "df041e3c-fc09-4ba2-8e6b-37f2c6a02526",
+              "name": "customer_id",
+              "type": "string",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "id": "bf288953-4fef-4f55-a45f-c223714919c0",
+              "name": "customer_name",
+              "type": "string",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "id": "1cff0b21-6740-4697-9d2c-9bcb045af0be",
+              "name": "customer_description",
+              "type": "string",
+              "value": "={{ $json.notes }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f6d22d64-c77f-415d-9c34-c7106ba4877a",
+      "name": "Data Cleaning",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1200,
+        528
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "customerId": "={{ $json.customer_id }}",
+        "message": "=Hi {{ $json.customer_name }}. This is a test message from the n8n workflow. Your description is: {{ $json.customer_description }}."
+      },
+      "type": "n8n-nodes-base.n8nTrainingCustomerMessenger",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        528
+      ],
+      "id": "ed1784de-6224-4411-bade-2a9d26601dd3",
+      "name": "Customer Messenger (n8n training)"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Customer Datastore": {
+      "main": [
+        [
+          {
+            "node": "Data Cleaning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Test Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Customer Datastore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Cleaning": {
+      "main": [
+        [
+          {
+            "node": "Customer Messenger (n8n training)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "35c159bf-6887-4a02-8727-81eb3a4d53a1",
+  "meta": {
+    "templateId": "1700",
+    "instanceId": "fd5a68f0c752ba0d64fcc13e181b705560ebcd91b307ae97c92329997aaef117"
+  },
+  "id": "XTifCt4DA3ibtu95",
+  "tags": []
+}
