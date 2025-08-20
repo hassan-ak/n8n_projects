@@ -1,0 +1,188 @@
+{
+  "name": "04_installation_form_slack_notifier",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Installation Request Form",
+        "formDescription": "Fill this form to request an installation, we will reach out to you through email.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "Enter Your Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "Enter Your Email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Installation Date",
+              "fieldType": "date",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        -48
+      ],
+      "id": "b34743cd-58d4-4407-b621-aa1377b82d0a",
+      "name": "On Installation Request Form Submission",
+      "webhookId": "e7ac4218-0a5f-4d68-af82-931e85a0c5ef"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2a033ca7-0a74-4615-be81-843578e89a17",
+              "leftValue": "={{ $json['Installation Date'] }}",
+              "rightValue": "={{ $today.plus(7,'days') }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "beforeOrEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -48,
+        -48
+      ],
+      "id": "ce83df73-7d03-4986-89ae-fbaf81239c9a",
+      "name": "is within 7 days"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C099URMQ9NX",
+          "mode": "list",
+          "cachedResultName": "all-n8n-testing"
+        },
+        "text": "=*Urgent*\n\nNew Install Request (with in 7 days)\n*Name:* {{ $json.Name }}\n*Email:* {{ $json.Email }}\n*Installation Date:* {{ $json['Installation Date'] }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        160,
+        -144
+      ],
+      "id": "5249b9cd-5d16-4ed8-b0b4-aa1c0a071e9e",
+      "name": "Send Urgent message",
+      "webhookId": "2379258a-f313-4696-b6ef-da7f58a5a94b",
+      "credentials": {
+        "slackApi": {
+          "id": "nncqi7vdLdasyoPH",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C099URMQ9NX",
+          "mode": "list",
+          "cachedResultName": "all-n8n-testing"
+        },
+        "text": "=New Install Request\n*Name:* {{ $json.Name }}\n*Email:* {{ $json.Email }}\n*Installation Date:* {{ $json['Installation Date'] }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        160,
+        32
+      ],
+      "id": "0ff9f2d0-7c10-4144-b58c-0c6f256fbadb",
+      "name": "Send message",
+      "webhookId": "2379258a-f313-4696-b6ef-da7f58a5a94b",
+      "credentials": {
+        "slackApi": {
+          "id": "nncqi7vdLdasyoPH",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Installation Form Slack Notifier\n\nForm submission → Check Installation Date ≤ today+7d. If urgent: send Urgent Slack. Else: normal Slack message.",
+        "height": 176,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -544,
+        -272
+      ],
+      "typeVersion": 1,
+      "id": "05ee152a-06d8-41c6-8940-ad8844a289b0",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On Installation Request Form Submission": {
+      "main": [
+        [
+          {
+            "node": "is within 7 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "is within 7 days": {
+      "main": [
+        [
+          {
+            "node": "Send Urgent message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "33db12df-a6f6-462b-9a2a-757832a1a278",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fd5a68f0c752ba0d64fcc13e181b705560ebcd91b307ae97c92329997aaef117"
+  },
+  "id": "W7a7j9OFSwPeF4QY",
+  "tags": []
+}
